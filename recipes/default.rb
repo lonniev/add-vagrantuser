@@ -21,6 +21,7 @@ user "vagrant" do
     action :create
     comment "Vagrant User"
     supports :manage_home=>true
+    home "/home/vagrant"
     shell "/bin/bash"
     password "$1$X7FxekSe$oMDholZuYrBQ3I6NlKIVZ/"
 end

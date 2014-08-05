@@ -19,8 +19,8 @@
 
 user "vagrant" do
     action :create
-    supports :manage_home => true
     comment "Vagrant User"
+    home "/home/vagrant"
     password "$1$X7FxekSe$oMDholZuYrBQ3I6NlKIVZ/"
 end
 
@@ -30,6 +30,6 @@ user "vagrant" do
 end
 
 execute "grant vagrant sudo rights" do
-    command "echo %vagrant ALL=NOPASSWD:ALL > /etc/sudoers.d/vagrant"
-    command "chmod 0440 /etc/sudoers.d/vagrant"
+    command "sfile=$(tempfile -m 0440); echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > $sfile; mv $sfile /etc/sudoers.d/vagrant"
+    creates "/etc/sudoers.d/vagrant"
 end

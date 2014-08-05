@@ -31,6 +31,12 @@ user "vagrant" do
     gid "sudo"
 end
 
+execute "check for home directory" do
+    command "mkdir ~vagrant;chown vagrant.vagrant ~vagrant"
+    creates "~vagrant"
+    not_if { ::File.exists?("~vagrant")}
+end
+
 execute "grant vagrant sudo rights" do
     command "sfile=$(tempfile -m 0440); echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > $sfile; mv $sfile /etc/sudoers.d/vagrant"
     creates "/etc/sudoers.d/vagrant"

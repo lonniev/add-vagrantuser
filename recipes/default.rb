@@ -17,11 +17,25 @@
 # limitations under the License.
 #
 
+getHomeCmd = Mixlib::ShellOut.new("useradd -D|grep HOME|cut -d '=' -f 2")
+getHomeCmd.run_command
+
+homeDir = getHomeCmd.stdout.chomp
+
+userHomePath = "#{homeDir}/vagrant"
+
+directory userHomePath do
+    owner "vagrant"
+    group "vagrant"
+    recursive true
+    action :create
+end
+
 user "vagrant" do
     action :create
     comment "Vagrant User"
     supports :manage_home=>true
-    home "/home/vagrant"
+    home userHomePath
     shell "/bin/bash"
     password "$1$X7FxekSe$oMDholZuYrBQ3I6NlKIVZ/"
 end
@@ -29,12 +43,6 @@ end
 user "vagrant" do
     action :modify
     gid "sudo"
-end
-
-execute "check for home directory" do
-    command "mkdir ~vagrant;chown vagrant.vagrant ~vagrant"
-    creates "~vagrant"
-    not_if { ::File.exists?("~vagrant")}
 end
 
 execute "grant vagrant sudo rights" do

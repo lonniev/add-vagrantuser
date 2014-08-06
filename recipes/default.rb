@@ -49,3 +49,14 @@ execute "grant vagrant sudo rights" do
     command "sfile=$(tempfile -m 0440); echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > $sfile; mv $sfile /etc/sudoers.d/vagrant"
     creates "/etc/sudoers.d/vagrant"
 end
+
+xSessionFile = "#{userHomePath}/.xsession"
+
+file xSessionFile do
+    owner gitUserName
+    group gitUserName
+    mode 0644
+    content "xfce4-session"
+    
+    action :create_if_missing
+end

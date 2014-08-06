@@ -53,8 +53,8 @@ end
 xSessionFile = "#{userHomePath}/.xsession"
 
 file xSessionFile do
-    owner gitUserName
-    group gitUserName
+    owner "vagrant"
+    group "vagrant"
     mode 0644
     content "xfce4-session"
     

@@ -47,6 +47,10 @@ group "sudo" do
 end
 
 group "tsusers" do
+    action :create
+end
+
+group "tsusers" do
     action :modify
     members "vagrant"
     append  true

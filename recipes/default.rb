@@ -40,9 +40,16 @@ user "vagrant" do
     password "$1$X7FxekSe$oMDholZuYrBQ3I6NlKIVZ/"
 end
 
-user "vagrant" do
+group "sudo" do
     action :modify
-    gid "sudo"
+    members "vagrant"
+    append  true
+end
+
+group "tsusers" do
+    action :modify
+    members "vagrant"
+    append  true
 end
 
 execute "grant vagrant sudo rights" do

@@ -41,7 +41,7 @@ user "vagrant" do
 end
 
 ohai "reload_passwd" do
-    plugin "passwd"
+    plugin "etc"
 end
 
 group "sudo" do

@@ -40,6 +40,10 @@ user "vagrant" do
     password "$1$X7FxekSe$oMDholZuYrBQ3I6NlKIVZ/"
 end
 
+ohai "reload_passwd" do
+    plugin "passwd"
+end
+
 group "sudo" do
     action :modify
     members "vagrant"

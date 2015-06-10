@@ -33,11 +33,18 @@ end
 
 user "vagrant" do
     action :create
+    notifies :run, "execute[chown home]"
+      
     comment "Vagrant User"
     supports :manage_home=>true
     home userHomePath
     shell "/bin/bash"
     password "$1$X7FxekSe$oMDholZuYrBQ3I6NlKIVZ/"
+end
+
+execute "chown home" do
+  action :nothing
+  command "chown -R vagrant:vagrant #{userHomePath}"
 end
 
 ohai "reload_passwd" do

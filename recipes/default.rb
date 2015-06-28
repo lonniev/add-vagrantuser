@@ -24,16 +24,9 @@ homeDir = getHomeCmd.stdout.chomp
 
 userHomePath = "#{homeDir}/vagrant"
 
-directory userHomePath do
-    owner "vagrant"
-    group "vagrant"
-    recursive true
-    action :create
-end
-
 user "vagrant" do
     action :create
-    notifies :run, "execute[chown home]"
+    notifies :run, "ohai[reload_password]", :immediately
       
     comment "Vagrant User"
     supports :manage_home=>true
@@ -42,13 +35,20 @@ user "vagrant" do
     password "$1$X7FxekSe$oMDholZuYrBQ3I6NlKIVZ/"
 end
 
-execute "chown home" do
-  action :nothing
-  command "chown -R vagrant:vagrant #{userHomePath}"
-end
-
 ohai "reload_passwd" do
     plugin "etc"
+end
+
+directory userHomePath do
+    owner "vagrant"
+    group "vagrant"
+    recursive true
+    action :create
+end
+
+execute "chown home" do
+  command "chown -R vagrant:vagrant #{userHomePath}"
+  only_if { userHomePath.exist? }
 end
 
 group "sudo" do

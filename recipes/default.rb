@@ -36,6 +36,7 @@ user "vagrant" do
 end
 
 ohai "reload_passwd" do
+    action :nothing
     plugin "etc"
 end
 

@@ -26,7 +26,6 @@ userHomePath = "#{homeDir}/vagrant"
 
 user "vagrant" do
     action :create
-    notifies :run, "ohai[reload_password]", :immediately
       
     comment "Vagrant User"
     supports :manage_home=>true
@@ -36,7 +35,6 @@ user "vagrant" do
 end
 
 ohai "reload_passwd" do
-    action :nothing
     plugin "etc"
 end
 

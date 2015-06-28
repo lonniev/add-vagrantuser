@@ -47,7 +47,7 @@ end
 
 execute "chown home" do
   command "chown -R vagrant:vagrant #{userHomePath}"
-  only_if { userHomePath.exist? }
+  only_if { Pathname.new( userHomePath ).exist? }
 end
 
 group "sudo" do

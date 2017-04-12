@@ -26,9 +26,9 @@ userHomePath = "#{homeDir}/vagrant"
 
 user "vagrant" do
     action :create
-      
+
     comment "Vagrant User"
-    supports :manage_home=>true
+    manage_home true
     home userHomePath
     shell "/bin/bash"
     password "$1$X7FxekSe$oMDholZuYrBQ3I6NlKIVZ/"
@@ -78,6 +78,6 @@ file xSessionFile do
     group "vagrant"
     mode 0644
     content "xfce4-session"
-    
+
     action :create_if_missing
 end
